@@ -1,0 +1,35 @@
+permissions:
+  scopes:
+    - 'manage:jira-data-provider'
+    - 'storage:app'
+modules:
+  jira:adminPage:
+    - key: admin-page
+      function: admin
+      title: Jenkins Integration    
+  webtrigger:
+    - key: webhook-receiver
+      function: post-build-info
+    - key: webhook-deployment
+      function: post-deployment-info
+  devops:buildInfoProvider:
+    - key: build-provider
+      homeUrl: https://hello.atlassian.net/wiki/spaces/PF/pages/1210908468/DevOps+Integrations+with+Forge+-+Painted+Picture
+      name:
+        value: Forge App         
+  devops:deploymentInfoProvider:
+    - key: deployment-provider
+      homeUrl: https://hello.atlassian.net/wiki/spaces/PF/pages/1210908468/DevOps+Integrations+with+Forge+-+Painted+Picture
+      name:
+        value: Forge App
+  function:
+    - key: post-build-info
+      handler: index.processWebhook
+    - key: post-deployment-info
+      handler: deployment.processDeployment
+    - key: admin
+      handler: admin.run
+app:
+  id: ari:cloud:ecosystem::app/4672e004-ff75-4851-b73f-37e35ccce067
+  name: jenkins-integration
+
