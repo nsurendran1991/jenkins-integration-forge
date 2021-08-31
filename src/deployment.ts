@@ -1,9 +1,7 @@
 import { storage} from "@forge/api";
 
-
-
-const buildResponse = (statusCode) => ({
-  body: '{}',
+const buildResponse = (statusCode, response) => ({
+  body: response.body,
   headers: {
     'Content-Type': ['application/json'],
   },
@@ -25,24 +23,27 @@ const buildResponse = (statusCode) => ({
     var secretText = request.headers['x-security-token'];
     console.log('secretText '+secretText);
     var secret = await storage.get('secret');
-    console.log('secret '+secret);
+   console.log('secret '+secret);
     if(secretText == secret){
   
-    const result = await global.api
-        .asApp()
-        .__requestAtlassian(`/jira/deployments/0.1/cloud/${cloudId}/bulk`,{
+        const result = await (global as any).api
+          .asApp()
+          .__requestAtlassian(`/jira/deployments/0.1/cloud/${cloudId}/bulk`,{
               method: 'POST',
               headers: {
                  'content-type': 'application/json'
               },
               body: request.body,
             }
-    );
+        );
   
-    console.log(`response: ${JSON.stringify(result)}`);
-          }else{
-            console.log('Authorization failed--------');
-          }
+        console.log(`response: ${JSON.stringify(result)}`);
+        console.log(result);
+        return buildResponse(result.statusCode, result);
+    }else{
+      console.log('Authorization failed--------');
+      return buildResponse(401, {body: {}});
+    }
   
-    return buildResponse(200);
+    
   };

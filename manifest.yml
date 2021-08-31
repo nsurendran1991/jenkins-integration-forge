@@ -24,7 +24,7 @@ modules:
         value: Forge App
   function:
     - key: post-build-info
-      handler: index.processWebhook
+      handler: build.processWebhook
     - key: post-deployment-info
       handler: deployment.processDeployment
     - key: admin

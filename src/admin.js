@@ -15,7 +15,7 @@ const getBuildInfoURL = async () => {
   };
   
 
-const App =  () => {    
+ const App =  () => {    
     
     const [buildUrl, setbuildUrl] = useAction(
         () => getBuildInfoURL(),
